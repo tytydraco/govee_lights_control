@@ -1,0 +1,28 @@
+name: Daily Govee Control
+
+on:
+  schedule:
+    # Run at midnight CST (06:00 UTC)
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+env:
+  GOVEE_API_KEY: ${{ secrets.GOVEE_API_KEY }}
+  TZ: America/Chicago
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Run Govee control
+        run: dart run bin/govee.dart
