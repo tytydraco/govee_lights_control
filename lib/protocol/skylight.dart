@@ -51,12 +51,32 @@ class Skylight extends Protocol {
   /// Called every tick to update the light.
   @override
   Future<bool> tick(DateTime time) async {
+    // Keep the light off until sunrise.
+    if (time.isBefore(sunrise)) {
+      await setPower(device, power: false);
+      return true;
+    }
+
+    // Keep the light on during the day.
+    if (time.isAfter(sunrise) && time.isBefore(sunset)) {
+      await setPower(device, power: true);
+    }
+
+    // Keep the light off after sunset.
+    if (time.isAfter(sunset)) {
+      await setPower(device, power: false);
+      return false;
+    }
+
     final brightness = _sunLerp(min: 1, max: 100, time: time).round();
     final color = _sunLerp(min: 2200, max: 6500, time: time).round();
 
     stdout
+      ..writeln('+ Sunrise Protocol +')
+      ..writeln('Time: $time')
       ..writeln('Brightness: $brightness')
-      ..writeln('Color: $color');
+      ..writeln('Color: $color')
+      ..writeln();
 
     await setBrightness(device, brightness: brightness);
     await setColorK(device, temperature: color);

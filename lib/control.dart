@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:govee_lights_control/constants.dart';
+import 'package:govee_lights_control/api.dart';
 import 'package:govee_lights_control/device.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,7 +15,7 @@ Future<Map<String, dynamic>> setValue<T>(
   final uri = Uri.https('openapi.api.govee.com', endpoint);
   final info = await http.post(
     uri,
-    headers: {'Govee-API-Key': apiKey, 'Content-Type': 'application/json'},
+    headers: {'Govee-API-Key': apiKey!, 'Content-Type': 'application/json'},
     body: jsonEncode({
       'requestId': '1',
       'payload': {
