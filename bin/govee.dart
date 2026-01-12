@@ -12,8 +12,8 @@ Future<void> main(List<String> arguments) async {
   }
 
   final now = DateTime.now();
-  final sunrise = DateTime(now.year, now.month, now.day, 7, 30);
-  final sunset = DateTime(now.year, now.month, now.day, 17, 30);
+  final sunrise = DateTime(now.year, now.month, now.day, 6);
+  final sunset = DateTime(now.year, now.month, now.day, 18);
   final skylight = Skylight(
     device: floorLamp2,
     sunrise: sunrise,
