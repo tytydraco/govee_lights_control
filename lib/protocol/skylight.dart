@@ -44,11 +44,8 @@ class Skylight extends Protocol {
     // This gives us 0 at sunrise, 1 at noon, 0 at sunset
     final sunPosition = sin(progress * pi);
 
-    // Adjust the sun position to be more gradual at the edges.
-    final adjSunPosition = pow(sunPosition, 2.5);
-
     // Lerp between min and max using the sun position
-    return min + (max - min) * adjSunPosition;
+    return min + (max - min) * sunPosition;
   }
 
   /// Called every tick to update the light.
